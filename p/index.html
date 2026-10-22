@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juley Boutique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="pagina">
+
+<!-- ENCABEZADO -->
+<header class="header">
+    <a class="logo" href="#inicio"><img src="logo.jpg" alt="Juley Boutique"></a>
+
+    <div class="buscador">
+        <input type="search" id="buscar" placeholder="Buscar productos..."
+               oninput="buscarProductos()" onkeydown="if(event.key==='Enter')irProductos()">
+    </div>
+
+    <nav class="menu">
+        <a href="#inicio">Inicio</a>
+        <a href="#productos" onclick="filtrar('todos')">Tienda</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#mujer">Mujer</a>
+        <a href="#hombre">Hombre</a>
+        <button id="btnDescuento" onclick="abrirDescuento()">Descuento 10%</button>
+    </nav>
+
+    <nav class="redes">
+        <!-- CAMBIA TU_USUARIO por tus usuarios reales -->
+        <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@TU_USUARIO" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://wa.me/50237282660" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+</header>
+
+<!-- PORTADA -->
+<section id="inicio" class="hero">
+    <div class="hero-texto">
+        <h2>Accesorios que hablan de tu estilo</h2>
+        <p>Relojes, lentes, bolsos y joyería para ella y para él. Reserva tu pedido con el 50% de anticipo.</p>
+        <button class="boton-principal" onclick="filtrar('todos')">Ir a la tienda</button>
+    </div>
+    <img class="hero-img" src="portada.jpg" alt="">
+</section>
+
+<!-- ARTÍCULOS DESTACADOS (3 primeros productos) -->
+<section class="destacados">
+    <h3>Artículos destacados</h3>
+    <div id="destacados" class="destacados-fila"></div>
+</section>
+
+<!-- CATEGORÍAS -->
+<section id="categorias" class="categorias">
+    <h2>Compra por categoría</h2>
+    <div class="categorias-grid">
+        <div class="categoria-card">
+            <img src="img acces mujer/1000032282.jpg" alt="Accesorios para mujer">
+            <h3>Accesorios para Mujer</h3>
+            <button onclick="irZona('mujer')">Ver mujer</button>
+        </div>
+        <div class="categoria-card">
+            <img src="img acces hombre/1000032373.jpg" alt="Accesorios para hombre">
+            <h3>Accesorios para Hombre</h3>
+            <button onclick="filtrar('hombre')">Ver hombre</button>
+        </div>
+        <div class="categoria-card">
+            <div class="categoria-icono">✨</div>
+            <h3>Toda la colección</h3>
+            <button onclick="filtrar('todos')">Ver todos</button>
+        </div>
+    </div>
+</section>
+
+<!-- ZONA SOLO MUJER (accesorios) -->
+<section id="mujer" class="zona">
+    <div class="zona-titulo">
+        <h2>Solo para ella</h2>
+        <p>Accesorios para mujer.</p>
+    </div>
+    <div id="gridMujer" class="productos-grid"></div>
+</section>
+
+<!-- ZONA SOLO HOMBRE (productos de la carpeta "img hy") -->
+<section id="hombre" class="zona">
+    <div class="zona-titulo">
+        <h2>Solo para él</h2>
+        <p>Accesorios y ropa para hombre.</p>
+    </div>
+    <div id="gridHombre" class="productos-grid"></div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos" class="productos">
+    <div class="productos-titulo">
+        <h2 id="tituloProductos">Todos los productos</h2>
+        <div class="tabs">
+            <button onclick="filtrar('todos')">Todos</button>
+            <button onclick="filtrar('mujer')">Mujer</button>
+            <button onclick="filtrar('hombre')">Hombre</button>
+        </div>
+    </div>
+    <div class="subtabs">
+        <span>Mujer:</span>
+        <button onclick="filtrarSub('shorts')">Shorts</button>
+        <button onclick="filtrarSub('leggings')">Leggings</button>
+        <button onclick="filtrarSub('conjuntos')">Conjuntos</button>
+    </div>
+    <div id="gridProductos" class="productos-grid"></div>
+</section>
+
+<footer>
+    <img src="logo.jpg" alt="Juley Boutique">
+    <p>© 2026 Juley Boutique. Todos los derechos reservados.</p>
+</footer>
+
+</div>
+
+<!-- BOTONES FLOTANTES -->
+<button class="flotante-carrito" onclick="abrirCarrito()" aria-label="Tu carrito">🛍️<span id="contador">0</span></button>
+
+<div id="waChat" class="wa-chat">
+    <div class="wa-cabecera"><span>Hablemos por WhatsApp</span><button onclick="toggleWhatsApp()" aria-label="Cerrar chat">✕</button></div>
+    <div class="wa-cuerpo"><div class="wa-burbuja">¿Cómo puedo ayudarte?</div></div>
+    <div class="wa-entrada">
+        <input type="text" id="waMensaje" placeholder="Escribe tu mensaje..." onkeydown="if(event.key==='Enter')enviarChat()">
+        <button onclick="enviarChat()" aria-label="Enviar">➤</button>
+    </div>
+</div>
+<button class="flotante-wa" onclick="toggleWhatsApp()" aria-label="Abrir WhatsApp">💬</button>
+
+<!-- VENTANA: DESCUENTO CLIENTES CONOCIDOS -->
+<div id="descuentoFondo" class="modal-fondo" onclick="cerrarDescuento(event)">
+    <div class="modal">
+        <h2>Descuento del 10%</h2>
+        <p>Si eres cliente conocido de Juley Boutique, escribe tu correo para activar tu descuento.</p>
+        <input type="email" id="correoDescuento" placeholder="tucorreo@ejemplo.com" onkeydown="if(event.key==='Enter')validarCorreo()">
+        <p id="mensajeDescuento" class="mensaje" role="status"></p>
+        <button class="boton-principal ancho" onclick="validarCorreo()">Activar descuento</button>
+    </div>
+</div>
+
+<!-- CARRITO -->
+<div id="carritoFondo" class="carrito-fondo" onclick="cerrarCarritoFuera(event)">
+    <aside class="carrito">
+        <div class="carrito-header">
+            <h2>Tu carrito</h2>
+            <button class="cerrar" onclick="cerrarCarrito()" aria-label="Cerrar">✕</button>
+        </div>
+        <div id="listaCarrito"></div>
+        <div id="carritoVacio" class="carrito-vacio">
+            <p>Tu carrito está vacío.</p>
+            <button onclick="cerrarCarrito()">Continuar comprando</button>
+        </div>
+        <div id="resumen" class="resumen">
+            <div class="linea"><span>Subtotal</span><strong id="subtotal">Q0.00</strong></div>
+            <div class="linea descuento" id="lineaDescuento"><span>Descuento 10%</span><strong id="descuento">-Q0.00</strong></div>
+            <div class="linea"><span>Total</span><strong id="total">Q0.00</strong></div>
+            <div class="linea anticipo"><span>Anticipo a depositar (50%)</span><strong id="anticipo">Q0.00</strong></div>
+            <div class="linea"><span>Saldo al recibir</span><strong id="saldo">Q0.00</strong></div>
+            <p class="nota">Tu pedido se reserva al recibir el depósito del 50%.</p>
+            <button class="boton-principal ancho" onclick="finalizarCompra()">Finalizar compra</button>
+            <button class="secundario" onclick="cerrarCarrito()">Continuar comprando</button>
+            <button class="secundario" onclick="vaciarCarrito()">Vaciar carrito</button>
+        </div>
+    </aside>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
